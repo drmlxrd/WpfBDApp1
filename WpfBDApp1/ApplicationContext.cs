@@ -14,7 +14,7 @@ namespace WpfBDApp1
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=BD.db");
+            optionsBuilder.UseSqlite("Data Source=BD1.db");
         }
     }
 }

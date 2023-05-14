@@ -12,29 +12,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfBDApp1.Items;
-using static WpfBDApp1.MainWindow;
 
-namespace WpfBDApp1
+namespace WpfBDApp1.EditWind
 {
     /// <summary>
-    /// Логика взаимодействия для UserWindow.xaml
+    /// Логика взаимодействия для EditWindow.xaml
     /// </summary>
-    public partial class UserWindow : Window
+    public partial class EditWindow : Window
     {
         public Product Product { get; set; }
-        public UserWindow(Product product)
+        public EditWindow(Product product)
         {
+            InitializeComponent();
             Product = product;
             DataContext = Product;
-            InitializeComponent();
         }
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+        private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            Metod.Metod.AddProduct(Product.Id, Product.Name, Product.Price, Product.Description);
-            MainWindow mainwindow = new MainWindow();
+            DialogResult = true;
             Close();
-            mainwindow.ShowDialog();
+
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

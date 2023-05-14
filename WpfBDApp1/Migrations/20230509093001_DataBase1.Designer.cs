@@ -11,8 +11,8 @@ using WpfBDApp1;
 namespace WpfBDApp1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230508151642_MigBd")]
-    partial class MigBd
+    [Migration("20230509093001_DataBase1")]
+    partial class DataBase1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

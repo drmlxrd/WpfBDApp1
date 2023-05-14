@@ -16,9 +16,11 @@ using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
 using System.Drawing;
 using WpfBDApp1.Items;
+using WpfBDApp1.EditWind;
 using System.IO;
 using QRCoder;
 using Microsoft.EntityFrameworkCore;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace WpfBDApp1
 {
@@ -39,6 +41,8 @@ namespace WpfBDApp1
             
         }
 
+
+        //ListBoxBD/qrcode
         private void Sqlite_Loaded(object sender, RoutedEventArgs e)
         {
             ApplicationContext db = new ApplicationContext();
@@ -69,34 +73,30 @@ namespace WpfBDApp1
             productList.ItemsSource = ItemProduct;
         }
 
+
+        //редактирование
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            Product user = productList.SelectedItem as Product;
-            if (user is null) return;
-            UserWindow UserWindow = new UserWindow(new Product
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Price = user.Price,
-                Description = user.Description
-            });
+            var product = productList.SelectedItem as Product;
 
-            if (UserWindow.ShowDialog() == true)
+            if (new EditWind.EditWindow(product).ShowDialog() == true)
             {
-                user = db.Products.Find(UserWindow.Product.Id);
-                if (user != null)
+                using (var context = new ApplicationContext())
                 {
-                    user.Name = UserWindow.Product.Name;
-                    user.Price = UserWindow.Product.Price;
-                    user.Description = UserWindow.Product.Description;
-                    db.SaveChanges();
-                    productList.Items.Refresh();
+                    context.Entry(product).State = EntityState.Modified;
+                    context.SaveChanges();
+
                 }
+                productList.Items.Refresh();
             }
+            MainWindow mainWindow = new MainWindow();
+            Close();
+            mainWindow.ShowDialog();
 
 
         }
 
+        //добавление
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             UserWindow UserWindow = new UserWindow(new Product());
@@ -105,19 +105,25 @@ namespace WpfBDApp1
                 Product User = UserWindow.Product;
                 db.Products.Add(User);
                 db.SaveChanges();
-                Close();
 
             }
-            
+
+
 
         }
 
+
+        //удаление
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Product? user = productList.SelectedItem as Product;
-            if (user is null) return;
-            db.Products.Remove(user);
-            db.SaveChanges();
+            if(MessageBox.Show("Вы действительно хотите удалить?", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                var Del = productList.SelectedItem as Product;
+                db.Products.Remove(Del);
+                db.SaveChanges();
+                productList.ItemsSource = db.Products.ToList();
+                MessageBox.Show("Успешно");
+            }
 
 
         }

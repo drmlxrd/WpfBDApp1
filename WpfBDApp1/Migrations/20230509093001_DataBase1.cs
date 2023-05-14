@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WpfBDApp1.Migrations
 {
     /// <inheritdoc />
-    public partial class MigBd : Migration
+    public partial class DataBase1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBDApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="#D3D3D3">
+        Title="MainWindow" Height="450" Width="800" Background="#D3D3D3"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <ListBox x:Name="productList" ItemsSource="{Binding ItemProduct}" >
+        <ListBox x:Name="productList" ItemsSource="{Binding ItemProduct}" SelectedItem="{Binding ItemList}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Blue" BorderThickness="2">
