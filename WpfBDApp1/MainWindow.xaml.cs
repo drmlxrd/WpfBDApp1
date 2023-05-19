@@ -122,7 +122,7 @@ namespace WpfBDApp1
                 db.Products.Remove(Del);
                 db.SaveChanges();
                 productList.ItemsSource = db.Products.ToList();
-                MessageBox.Show("Успешно");
+                MessageBox.Show("Успешно!");
             }
 
 
